@@ -2,22 +2,24 @@
 int	so_long(const char *arg)
 {
 	int i;
-	game a;
-	game *p;
+	t_coord a;
+	t_coord *p;
 	//int map_size;
 	char	**map;
 
-	a.pos_x = 0;
-    a.pos_y = 0;
+	a.x = 0;
+    a.y = 0;
 	i = -1;
 	p = &a;
 	if (check_map(arg))
 	{
 		if(map_size_error(arg, p) == 0)
 			return(printf("%s\n", "mauvaise map :("));
-		printf("x = %d\n", a.pos_x);
-		printf("y = %d\n", a.pos_y);
+		printf("x = %d\n", a.x);
+		printf("y = %d\n", a.y);
 		map = maplloc(arg);
+		while(++i < 20)
+		printf("%s\n", map[i]);
 		window_init(a,map);
 	}
 	return (1);
