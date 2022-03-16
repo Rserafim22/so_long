@@ -1,5 +1,15 @@
 #include "so_long.h"
-//void    init_image(void *mlx_ptr, game a);
+
+int close_game(int key, t_mlx *mlx)
+{
+    if (key == 53)
+    {
+        mlx_clear_window(mlx->ptr,mlx->window);
+        mlx_destroy_window(mlx->ptr,mlx->window);
+        exit(printf("jeu fermé\n"));
+    }
+    return(1);
+}
 void    window_init(t_coord a,char **map)
 {
     t_mlx   mlx;
@@ -9,9 +19,8 @@ void    window_init(t_coord a,char **map)
     mlx.window = mlx_new_window(mlx.ptr,a.x * 16,a.y *16,"so_long");
     init_image(&game,&mlx);
     fill_map(mlx,game,map);
-    //mlx_put_image_to_window(mlx.ptr,mlx.window,game.player,20,20);
+    mlx_key_hook(mlx.window,close_game,&mlx);
     mlx_loop(mlx.ptr);
-
 }
 
 void    init_image(t_image *p,t_mlx *mlx)
@@ -20,8 +29,6 @@ void    init_image(t_image *p,t_mlx *mlx)
     p->wall = mlx_xpm_file_to_image(mlx->ptr,"assets/wall.xpm",&p->width,&p->height);
     p->coin = mlx_xpm_file_to_image(mlx->ptr,"assets/coin.xpm",&p->width,&p->height);
     p->monster = mlx_xpm_file_to_image(mlx->ptr,"assets/monster.xpm",&p->width,&p->height);
-    printf("widht %d\n", p->width);
-    printf("height %d\n", p->height);
 }
 
 void    fill_map(t_mlx mlx, t_image game, char **map)
@@ -33,18 +40,7 @@ void    fill_map(t_mlx mlx, t_image game, char **map)
     {
         index.x = 0;
         fill_line(index,mlx,game,map[index.y]);
-       /* while(map[index.x] != NULL)
-        {
-            printf("%c\n", map[index.x][index.y]);
-            if (map[index.x][index.y] == 'P')
-                mlx_put_image_to_window(mlx.ptr,mlx.window,game.player,index.y * 16, index.x *16);
-            if (map[index.x][index.y] == 'C')
-                mlx_put_image_to_window(mlx.ptr,mlx.window,game.coin,index.y * 16, index.x * 16);
-            if (map[index.x][index.y] == '1')
-                mlx_put_image_to_window(mlx.ptr,mlx.window,game.wall,index.y * 16, index.x * 16);
-            index.x++;
-        }*/
-            index.y++;
+        index.y++;
     }
 }
 void fill_line(t_coord index,t_mlx mlx, t_image game, char *line)

@@ -18,8 +18,6 @@ typedef struct s_coord {
 typedef struct s_mlx {
     void *ptr;
     void *window;
-
-
 }           t_mlx;
 
 typedef struct s_game {
@@ -70,5 +68,6 @@ void    window_init(t_coord a,char **map);
 void    init_image(t_image *p,t_mlx *mlx);
 void    fill_map(t_mlx mlx, t_image game, char **map);
 void fill_line(t_coord index,t_mlx mlx, t_image game, char *line);
+int close_game(int key, t_mlx *mlx);
 
 #endif

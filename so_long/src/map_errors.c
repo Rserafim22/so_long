@@ -12,18 +12,14 @@ int map_size_error(const char *map_name, t_coord *p)
     line = get_next_line(fd);
     if (ft_char_find(line,'0'))
         return(0);
-    printf("first line ok\n");
     (*p).x = strlen(line);
     (*p).y = check_mid_map (line,need,fd);
     if ((*p).y == 0 || (*p).x == 0)
         return (0);
-     printf("x y != 0 ok\n");
     if ((*p).y == (*p).x)
         return(0);
-     printf("x != y ok\n");
     if (strcmp(need, "777") != 0)
         return (0);
-     printf("need ok\n");
     return (1);
 }
 int ft_char_find(const char *str, int to_find)
@@ -46,7 +42,6 @@ int ft_check_line(const char *line, char *need)
     int y;
 
     i = - 1;
-    printf("%s\n", line);
     while (line[++i] != '\0')
     {
         if ((line[i + 1] == '\0' && line[i] != '1') || line[0] != '1')
@@ -81,10 +76,8 @@ int check_mid_map(const char *line, char *need, int fd)
         last_line = strdup(line);
         if (comp != strlen(line))
             return (0);
-         printf("comp ok\n");
         if (ft_check_line(line, need) == 1)
             return (0);
-         printf("check line ok\n");
         line = get_next_line(fd);
     }
     if (ft_char_find(last_line,'0'))
