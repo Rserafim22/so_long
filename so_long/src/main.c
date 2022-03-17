@@ -1,19 +1,20 @@
 #include "so_long.h"
 int	so_long(const char *arg)
 {
+	t_game	x;
 	t_coord a;
 	t_coord *p;
 	char	**map;
 
-	a.x = 0;
-    a.y = 0;
-	p = &a;
+	x.mapi.x = 0;
+    x.mapi.y = 0;
+	p = &x.mapi;
 	if (check_map(arg))
 	{
 		if(map_size_error(arg, p) == 0)
 			return(printf("%s\n", "mauvaise map :("));
 		map = maplloc(arg);
-		window_init(a,map);
+		window_init(x,map);
 	}
 	return (1);
 }
