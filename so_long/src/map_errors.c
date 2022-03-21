@@ -1,6 +1,22 @@
 #include "so_long.h"
 #include "get_next_line.h"
+int check_need(char c, const char *line, char *need)
+{
+    int y;
 
+    y = 0;
+    if (c == 'P' && need[1] == '7')
+        return (1);
+    if (c == 'E' && need[2] == '7')
+        return (1);
+    while (need[y] != '\0')
+    {
+        if (need[y] == c)
+            need[y] = '7';
+        y++;
+    }
+    return (0);
+}
 int map_size_error(const char *map_name, t_coord *p)
 {
     int fd;
@@ -47,15 +63,8 @@ int ft_check_line(const char *line, char *need)
         if ((line[i + 1] == '\0' && line[i] != '1') || line[0] != '1')
             return (1);
         if (line[i] == 'P' || line[i] == 'C' || line[i] == 'E')
-        {
-            y = 0;
-            while (need[y] != '\0')
-            {
-                if (need[y] == line[i])
-                    need[y] = '7';
-                y++;
-            }
-        }
+            if(check_need(line[i], line, need))
+                return (1);
         if (line[i] != '0' && line[i] != '1' && line[i] != 'C'
             && line[i] != 'E'  && line[i] != 'M' && line[i] != 'P' && line[i] != '\0')
                 return (1);
