@@ -23,7 +23,6 @@ void entity_counter(t_game *x)
 int	so_long(const char *arg)
 {
 	t_game	x;
-	//char	**map;
 
 	x.mapi.x = 0;
     x.mapi.y = 0;
@@ -34,7 +33,7 @@ int	so_long(const char *arg)
 		x.map = maplloc(arg);
 		entity_counter(&x);
 		printf("%zu\n", x.count_monster);
-		init_entity(&x, 'M');
+		init_entity(&x);
 		window_init(x);
 	}
 	return (1);

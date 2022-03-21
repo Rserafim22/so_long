@@ -1,6 +1,6 @@
 #include "so_long.h"
-#include "get_next_line.h"
-int check_need(char c, const char *line, char *need)
+
+int check_need(char c, char *need)
 {
     int y;
 
@@ -55,7 +55,6 @@ int ft_char_find(const char *str, int to_find)
 int ft_check_line(const char *line, char *need)
 {
     int i;
-    int y;
 
     i = - 1;
     while (line[++i] != '\0')
@@ -63,7 +62,7 @@ int ft_check_line(const char *line, char *need)
         if ((line[i + 1] == '\0' && line[i] != '1') || line[0] != '1')
             return (1);
         if (line[i] == 'P' || line[i] == 'C' || line[i] == 'E')
-            if(check_need(line[i], line, need))
+            if(check_need(line[i], need))
                 return (1);
         if (line[i] != '0' && line[i] != '1' && line[i] != 'C'
             && line[i] != 'E'  && line[i] != 'M' && line[i] != 'P' && line[i] != '\0')

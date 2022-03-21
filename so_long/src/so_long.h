@@ -2,6 +2,7 @@
 # define SO_LONG_H
 
 #include "../mlx/mlx.h"
+#include "../libft/libft.h"
 
 #include <unistd.h>
 #include <stdlib.h>
@@ -54,10 +55,8 @@ int     map_size_error(const char *map_name, t_coord *p);
 int     ft_char_find(const char *str, int to_find);
 int     ft_check_line(const char *line, char *need);
 int     check_mid_map(const char *line, char *need, int fd);
+int     check_need(char c, char *need);
 char    **maplloc(const char *arg);
-char	*ft_strjoin1(char const *s1, char const *s2);
-char	**ft_split(const char *str, char c);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
 void    window_init(t_game a);
 void    init_image(t_game *a);
 void    fill_map(t_game *p, char **map);
@@ -70,7 +69,7 @@ void    player_left(t_game *a);
 void    player_right(t_game *a);
 void    clear_image(t_mlx mlx, t_coord player);
 void entity_counter(t_game *x);
-void    init_entity(t_game *a, char c);
+void    init_entity(t_game *a);
 void    coin_collected(t_game *a);
 void    init_position(t_game *a, char c);
 

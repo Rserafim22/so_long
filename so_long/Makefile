@@ -1,24 +1,31 @@
 CC = cc
+CFLAGS = -Wall -Wextra -Werror -I.
+RM = rm -rf
+LIB = -L ./mlx -lmlx -L ./libft -lft
 NAME = so_long
+GRAPHICS = -L mlx/ -lmlx -framework OpenGL -framework Appkit
+FOLDER = src/
+FILES = main.c \
+				events.c \
+				fill_map.c \
+				key_event.c \
+				map_errors.c \
+				window_init.c
 
-SRC = src/*.c
-OBJ = $(src:.c=.o)
+SRC = $(addprefix $(FOLDER), $(FILES))
+OBJ = $(SRC:.c=.o)
 
 
 all: $(NAME)
 
-%.o: %.c
-	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
-
 $(NAME):	$(OBJ)
-	$(CC) -I mlx/ $(SRC) -L mlx/ -lmlx -framework OpenGL -framework Appkit -o so_long
+	$(CC) $(CFLAGS) $(GRAPHICS) -o $(NAME) $(OBJ) $(LIB)
 
 clean:
-	rm -rf src/*.o
+	$(RM) $(OBJ)
 
-fclean:
-	rm -rf src/*.o
-	rm -rf so_long
+fclean: clean
+	$(RM) $(NAME)
 
 re: fclean all
 

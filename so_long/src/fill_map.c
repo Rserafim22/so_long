@@ -1,5 +1,5 @@
 #include "so_long.h"
-#include "get_next_line.h"
+
 void    ft_free(char *str)
 {
     int i;
@@ -20,8 +20,8 @@ char **maplloc(const char *arg)
     line = get_next_line(fd);
         while (line != NULL)
         {
-            line = ft_strjoin((char *)line,'S');
-            save = ft_strjoin1(save, line);
+            line = ft_strjoin_char((char *)line,'S');
+            save = ft_strjoin(save, line);
             line = get_next_line(fd);
         }
         return(tab = ft_split(save, 'S'));
