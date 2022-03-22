@@ -31,7 +31,8 @@ void    window_init(t_game a)
     a.mlx.window = mlx_new_window(a.mlx.ptr,a.mapi.x * 16,a.mapi.y *16,"so_long");
     init_image(&a);
     fill_map(&a,a.map);
-    printf("player x :%d\nplayer y :%d\n", a.player.x, a.player.y);
+    printf("%zu\n", a.count_coll);
+    printf("s");
     mlx_key_hook(a.mlx.window,key_sort,&a);
     mlx_loop(a.mlx.ptr);
 }
@@ -60,16 +61,17 @@ void fill_line(char *line, t_game *a)
     while(line[a->mapi.x] != '\0')
         {
             if (line[a->mapi.x] == 'P')
-                init_position(a,line[a->mapi.x]);
+            {
+                mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->mapi.x * 16, a->mapi.y *16);
+                a->player.x = a->mapi.x;
+                a->player.y = a->mapi.y;
+            }
             if (line[a->mapi.x] == 'C')
                 init_position(a,line[a->mapi.x]);
             if (line[a->mapi.x] == '1')
                 mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.wall,a->mapi.x * 16, a->mapi.y * 16);
             if (line[a->mapi.x] == 'M')
-            {
                 init_position(a,line[a->mapi.x]);
-                a->count_monster++;
-            }
             if (line[a->mapi.x] == 'E')
                 init_position(a,line[a->mapi.x]);
             a->mapi.x++;
@@ -79,24 +81,19 @@ void fill_line(char *line, t_game *a)
 
 void    init_position(t_game *a, char c)
 {
-    if (c == 'P')
-    {
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->mapi.x * 16, a->mapi.y *16);
-        a->player.x = a->mapi.x;
-        a->player.y = a->mapi.y;
-    }
     if (c == 'C')
     {
         mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.coin,a->mapi.x * 16, a->mapi.y * 16);
-        a->coll.x = a->mapi.x;
-        a->coll.y = a->mapi.y;
+        a->coll[a->index_coll].x = a->mapi.x;
+        a->coll[a->index_coll].y = a->mapi.y;
+        a->index_coll++;
     }
     if (c == 'M')
     {
         mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->mapi.x * 16, a->mapi.y * 16);
-        a->monster->x = a->mapi.x;
-        a->monster->y = a->mapi.y;
-        a->monster++;
+        a->monster[a->index_monster].x = a->mapi.x;
+        a->monster[a->index_monster].y = a->mapi.y;
+        a->index_monster++;
     }
     if (c == 'E')
     {

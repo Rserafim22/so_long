@@ -39,13 +39,12 @@ typedef struct s_game {
     char            **map;
     t_coord            player;
     t_coord            sortie;
-    t_coord            coll;
-    t_coord            *monster;
-    int                collected;
-    size_t                count_monster;
     size_t             count_coll;
-    int                count_player;
-    size_t              index;
+    t_coord            *coll;
+    size_t             count_monster;
+    t_coord            *monster;
+    size_t              index_monster;
+    size_t              index_coll;
     size_t              player_moves;
 }                t_game;
 
@@ -72,5 +71,9 @@ void entity_counter(t_game *x);
 void    init_entity(t_game *a);
 void    coin_collected(t_game *a);
 void    init_position(t_game *a, char c);
+void    event_manager(t_game *a);
+void    monster_ia(t_game *a);
+int    monster_move(t_game *a, int i);
+int     check_monster_move(t_game *a, char *line, int i);
 
 #endif
