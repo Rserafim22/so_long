@@ -3,11 +3,11 @@ void    player_up(t_game *a)
 {
     char *line_up;
 
-    line_up = strdup(a->map[a->player.y - 1]);
+    line_up = ft_strdup(a->map[a->player.y - 1]);
     if (line_up[a->player.x] != '1' && (a->player.x != a->sortie.x || a->player.y != a->sortie.y + 1))
     {
         a->player_moves++;
-        printf("player moves = %zu\n", a->player_moves);
+        ft_printf("player moves = %d\n", a->player_moves);
         clear_image(a->mlx,a->player);
         a->player.y -= 1;
         mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 16,a->player.y *16);
@@ -24,11 +24,11 @@ void    player_down(t_game *a)
 {
     char *line_up;
 
-    line_up = strdup(a->map[a->player.y + 1]);
+    line_up = ft_strdup(a->map[a->player.y + 1]);
     if (line_up[a->player.x] != '1' && (a->player.x != a->sortie.x || a->player.y != a->sortie.y - 1))
     {
         a->player_moves++;
-        printf("player moves = %zu\n", a->player_moves);
+        ft_printf("player moves = %d\n", a->player_moves);
         clear_image(a->mlx,a->player);
         a->player.y += 1;
         mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 16,a->player.y *16);
@@ -44,11 +44,11 @@ void    player_left(t_game *a)
 {
     char *line;
 
-    line = strdup(a->map[a->player.y]);
+    line = ft_strdup(a->map[a->player.y]);
     if (line[a->player.x - 1] != '1' && (a->player.x != a->sortie.x + 1 || a->player.y != a->sortie.y))
     {
         a->player_moves++;
-        printf("player moves = %zu\n", a->player_moves);
+        ft_printf("player moves = %d\n", a->player_moves);
         clear_image(a->mlx,a->player);
         a->player.x -= 1;
         mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 16,a->player.y *16);
@@ -65,11 +65,11 @@ void    player_right(t_game *a)
 {
     char *line;
 
-    line = strdup(a->map[a->player.y]);
+    line = ft_strdup(a->map[a->player.y]);
     if (line[a->player.x + 1] != '1' && (a->player.x != a->sortie.x - 1 || a->player.y != a->sortie.y))
     {
         a->player_moves++;
-        printf("player moves = %zu\n", a->player_moves);
+        ft_printf("player moves = %d\n", a->player_moves);
         clear_image(a->mlx,a->player);
         a->player.x += 1;
         mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 16,a->player.y *16);

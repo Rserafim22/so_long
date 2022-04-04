@@ -23,18 +23,20 @@ int map_size_error(const char *map_name, t_coord *p)
     char *line;
     static char *need;
 
-    need = strdup("CPE");
+    need = ft_strdup("CPE");
     fd = (open(map_name,O_RDONLY));
+    if (fd == -1 || fd == 0)
+        return (0);
     line = get_next_line(fd);
     if (ft_char_find(line,'0'))
         return(0);
-    (*p).x = strlen(line);
+    (*p).x = ft_strlen(line);
     (*p).y = check_mid_map (line,need,fd);
     if ((*p).y == 0 || (*p).x == 0)
         return (0);
     if ((*p).y == (*p).x)
         return(0);
-    if (strcmp(need, "777") != 0)
+    if (ft_strncmp(need, "777", 3) != 0)
         return (0);
     return (1);
 }
@@ -81,8 +83,8 @@ int check_mid_map(const char *line, char *need, int fd)
     while (line != NULL || line != (void*)0)
     {
         i++;
-        last_line = strdup(line);
-        if (comp != strlen(line))
+        last_line = ft_strdup(line);
+        if (comp != ft_strlen(line))
             return (0);
         if (ft_check_line(line, need) == 1)
             return (0);
@@ -95,11 +97,11 @@ int check_mid_map(const char *line, char *need, int fd)
 
 int check_map(const char *map)
 {
-    char *check;
+    const char *check;
 
-    check = strrchr(map,'.');
+    check = ft_strrchr(map,'.');
     check++;
-    if (strcmp(check,"ber") == 0)
+    if (ft_strncmp(check,"ber", 3) == 0)
         return (1);
     else
         return (0);

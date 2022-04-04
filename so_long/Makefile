@@ -10,7 +10,8 @@ FILES = main.c \
 				fill_map.c \
 				key_event.c \
 				map_errors.c \
-				window_init.c
+				window_init.c \
+				utils.c
 
 SRC = $(addprefix $(FOLDER), $(FILES))
 OBJ = $(SRC:.c=.o)

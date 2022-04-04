@@ -36,6 +36,7 @@ typedef struct s_game {
     t_mlx           mlx;
     t_image         images;
     t_coord         mapi;
+    t_coord         mouse;
     char            **map;
     t_coord            player;
     t_coord            sortie;
@@ -75,5 +76,6 @@ void    event_manager(t_game *a);
 void    monster_ia(t_game *a);
 int    monster_move(t_game *a, int i);
 int     check_monster_move(t_game *a, char *line, int i);
+int    mouse_event(int key, int x, int y, t_game *a);
 
 #endif

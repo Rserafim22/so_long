@@ -5,18 +5,24 @@ void    close_game(t_mlx mlx, int i)
     mlx_clear_window(mlx.ptr,mlx.window);
     mlx_destroy_window(mlx.ptr,mlx.window);
     if (i == 53)
-        exit(printf("Jeu fermé\n"));
+        exit(ft_printf("Jeu fermé\n"));
     if (i == 1)
-        exit(printf("Bien vu bg\n"));
+        exit(ft_printf("Bien vu bg\n"));
     if (i == 2)
-        exit(printf("Zebi c'est dangereux\n"));
+        exit(ft_printf("Zebi c'est dangereux\n"));
 }
 int key_sort(int key, t_game *a)
 {
+        //ft_printf("mouse = %d\n", key);
     if (key == 53)
         close_game(a->mlx,53);
     if (key == 13)
+    {
+       // mlx_mouse_get_pos(a->mlx.window, &a->mouse.x, &a->mouse.y);
+        //ft_printf("mouse x = %d\n", a->mouse.x);
+        //ft_printf("mouse y = %d\n", a->mouse.y);
         player_up(a);
+    }
     if (key == 1)
         player_down(a);
     if (key == 0)
@@ -31,9 +37,11 @@ void    window_init(t_game a)
     a.mlx.window = mlx_new_window(a.mlx.ptr,a.mapi.x * 16,a.mapi.y *16,"so_long");
     init_image(&a);
     fill_map(&a,a.map);
-    printf("%zu\n", a.count_coll);
-    printf("s");
+    /*mlx_mouse_get_pos(a.mlx.window, &a.mouse.x, &a.mouse.y);
+    ft_printf("mouse x = %d\n", a.mouse.x);
+    ft_printf("mouse y = %d\n", a.mouse.y);*/
     mlx_key_hook(a.mlx.window,key_sort,&a);
+    mlx_mouse_hook(a.mlx.window, mouse_event,&a);
     mlx_loop(a.mlx.ptr);
 }
 
@@ -102,6 +110,3 @@ void    init_position(t_game *a, char c)
         a->sortie.y = a->mapi.y;
     }
 }
-
-// faire fonction param joueur//
-// analyse la map pour point de depart joueur + position actuelle//

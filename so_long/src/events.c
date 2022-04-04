@@ -10,7 +10,6 @@ void entity_counter(t_game *x)
 {
 	t_coord index;
 
-	index.x = 0;
 	index.y = 0;
 	x->count_monster = 0;
     x->count_coll = 0;
@@ -55,9 +54,9 @@ void    monster_ia(t_game *a)
     while (++a->index_monster < a->count_monster)
     {
         move_done = 0;
-        line = strdup(a->map[a->monster[a->index_monster].y]);
-        line_up = strdup(a->map[a->monster[a->index_monster].y - 1]);
-        line_down = strdup(a->map[a->monster[a->index_monster].y + 1]);
+        line = ft_strdup(a->map[a->monster[a->index_monster].y]);
+        line_up = ft_strdup(a->map[a->monster[a->index_monster].y - 1]);
+        line_down = ft_strdup(a->map[a->monster[a->index_monster].y + 1]);
         if (a->player.y < a->monster[a->index_monster].y && check_monster_move(a,line_up, 0) == 1)
                 move_done = monster_move(a, 'U');
         if (a->player.y > a->monster[a->index_monster].y && check_monster_move(a,line_down, 0) == 1)
@@ -83,13 +82,16 @@ int     check_monster_move(t_game *a, char *line, int i)
     other_monsters = -1;
     while (a->monster[current_monster].x != a->monster[++other_monsters].x)
     {
-        if (a->monster[current_monster].x + i == a->monster[other_monsters].x /*&& a->monster[current_monster].y == a->monster[current_monster].y */)
+        if (a->monster[current_monster].x + i == a->monster[other_monsters].x)
             return (0);
     }
+    a->index_coll = -1;
+    while (++a->index_coll <= a->count_coll)
+        if (a->monster[current_monster].x + i == a->coll[a->index_coll].x && a->monster[current_monster].y == a->coll[a->index_coll].y)
+            return (0);
+        if (a->monster[current_monster].x == a->coll[a->index_coll].x && a->monster[current_monster].y + i == a->coll[a->index_coll].y)
+            return (0);
     if (line[a->monster[a->index_monster].x + i] == '1')
-        return (0);
-    
-    if (line[a->monster[a->index_monster].x + i] == 'C')
         return (0);
     if (line[a->monster[a->index_monster].x + i] == 'E')
         return (0);
