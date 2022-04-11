@@ -23,6 +23,7 @@ typedef struct s_mlx {
 
 typedef struct s_image
 {
+    void *ground;
     void *player;
     void *coin;
     void *wall;
@@ -62,12 +63,12 @@ void    init_image(t_game *a);
 void    fill_map(t_game *p, char **map);
 void    fill_line(char *line, t_game *a);
 int     key_sort(int key, t_game *a);
-void    close_game(t_mlx mlx, int i);
+int    close_game(t_mlx mlx, int i);
 void    player_up(t_game *a);
 void    player_down(t_game *a);
 void    player_left(t_game *a);
 void    player_right(t_game *a);
-void    clear_image(t_mlx mlx, t_coord player);
+void    clear_image(t_mlx mlx, t_coord player, t_image img);
 void entity_counter(t_game *x);
 void    init_entity(t_game *a);
 void    coin_collected(t_game *a);
@@ -76,6 +77,7 @@ void    event_manager(t_game *a);
 void    monster_ia(t_game *a);
 int    monster_move(t_game *a, int i);
 int     check_monster_move(t_game *a, char *line, int i);
-int    mouse_event(int key, int x, int y, t_game *a);
+void	init_struct(t_game *struc);
+int close_button(t_mlx *mlx);
 
 #endif

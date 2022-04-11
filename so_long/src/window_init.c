@@ -1,6 +1,11 @@
 #include "so_long.h"
-
-void    close_game(t_mlx mlx, int i)
+int close_button(t_mlx *mlx)
+{
+    mlx_clear_window(mlx->ptr,mlx->window);
+    mlx_destroy_window(mlx->ptr,mlx->window);
+    exit(ft_printf("Jeu fermé\n"));
+}
+int    close_game(t_mlx mlx, int i)
 {
     mlx_clear_window(mlx.ptr,mlx.window);
     mlx_destroy_window(mlx.ptr,mlx.window);
@@ -9,20 +14,15 @@ void    close_game(t_mlx mlx, int i)
     if (i == 1)
         exit(ft_printf("Bien vu bg\n"));
     if (i == 2)
-        exit(ft_printf("Zebi c'est dangereux\n"));
+        exit(ft_printf("C'est dangereux !\n"));
+    return (0);
 }
 int key_sort(int key, t_game *a)
 {
-        //ft_printf("mouse = %d\n", key);
     if (key == 53)
         close_game(a->mlx,53);
     if (key == 13)
-    {
-       // mlx_mouse_get_pos(a->mlx.window, &a->mouse.x, &a->mouse.y);
-        //ft_printf("mouse x = %d\n", a->mouse.x);
-        //ft_printf("mouse y = %d\n", a->mouse.y);
         player_up(a);
-    }
     if (key == 1)
         player_down(a);
     if (key == 0)
@@ -34,14 +34,11 @@ int key_sort(int key, t_game *a)
 void    window_init(t_game a)
 {
     a.mlx.ptr = mlx_init();
-    a.mlx.window = mlx_new_window(a.mlx.ptr,a.mapi.x * 16,a.mapi.y *16,"so_long");
+    a.mlx.window = mlx_new_window(a.mlx.ptr,a.mapi.x * 32,a.mapi.y *32,"so_long");
     init_image(&a);
     fill_map(&a,a.map);
-    /*mlx_mouse_get_pos(a.mlx.window, &a.mouse.x, &a.mouse.y);
-    ft_printf("mouse x = %d\n", a.mouse.x);
-    ft_printf("mouse y = %d\n", a.mouse.y);*/
     mlx_key_hook(a.mlx.window,key_sort,&a);
-    mlx_mouse_hook(a.mlx.window, mouse_event,&a);
+    mlx_hook(a.mlx.window, 17, 0L << 00, close_button, &a.mlx);
     mlx_loop(a.mlx.ptr);
 }
 
@@ -52,10 +49,23 @@ void    init_image(t_game *p)
     p->images.wall = mlx_xpm_file_to_image(p->mlx.ptr,"assets/wall.xpm",&p->images.width,&p->images.height);
     p->images.coin = mlx_xpm_file_to_image(p->mlx.ptr,"assets/coin.xpm",&p->images.width,&p->images.height);
     p->images.monster = mlx_xpm_file_to_image(p->mlx.ptr,"assets/monster.xpm",&p->images.width,&p->images.height);
+    p->images.ground = mlx_xpm_file_to_image(p->mlx.ptr,"assets/ground.xpm",&p->images.width,&p->images.height);
 }
 
 void    fill_map(t_game *p, char **map)
 {
+    int i;
+    int j;
+
+    i = 0;
+    while (i++ < p->mapi.y * 32)
+    {
+        j = 0;
+        while (j++ < p->mapi.x)
+          mlx_put_image_to_window(p->mlx.ptr,p->mlx.window,p->images.ground,j * 32, i * 32);
+    }
+    p->index_coll = 0;
+    p->index_monster = 0;
     p->mapi.y = 0;
     while (map[p->mapi.y] != NULL)
     {
@@ -70,14 +80,16 @@ void fill_line(char *line, t_game *a)
         {
             if (line[a->mapi.x] == 'P')
             {
-                mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->mapi.x * 16, a->mapi.y *16);
+                mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->mapi.x * 32, a->mapi.y *32);
                 a->player.x = a->mapi.x;
                 a->player.y = a->mapi.y;
             }
             if (line[a->mapi.x] == 'C')
                 init_position(a,line[a->mapi.x]);
             if (line[a->mapi.x] == '1')
-                mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.wall,a->mapi.x * 16, a->mapi.y * 16);
+                mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.wall,a->mapi.x * 32, a->mapi.y * 32);
+            if (line[a->mapi.x] == '0')
+                mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.ground,a->mapi.x * 32, a->mapi.y * 32);
             if (line[a->mapi.x] == 'M')
                 init_position(a,line[a->mapi.x]);
             if (line[a->mapi.x] == 'E')
@@ -91,21 +103,21 @@ void    init_position(t_game *a, char c)
 {
     if (c == 'C')
     {
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.coin,a->mapi.x * 16, a->mapi.y * 16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.coin,a->mapi.x * 32, a->mapi.y * 32);
         a->coll[a->index_coll].x = a->mapi.x;
         a->coll[a->index_coll].y = a->mapi.y;
         a->index_coll++;
     }
     if (c == 'M')
     {
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->mapi.x * 16, a->mapi.y * 16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->mapi.x * 32, a->mapi.y * 32);
         a->monster[a->index_monster].x = a->mapi.x;
         a->monster[a->index_monster].y = a->mapi.y;
         a->index_monster++;
     }
     if (c == 'E')
     {
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.sortie,a->mapi.x * 16, a->mapi.y * 16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.sortie,a->mapi.x * 32, a->mapi.y * 32);
         a->sortie.x = a->mapi.x;
         a->sortie.y = a->mapi.y;
     }

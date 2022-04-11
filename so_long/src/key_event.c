@@ -8,9 +8,9 @@ void    player_up(t_game *a)
     {
         a->player_moves++;
         ft_printf("player moves = %d\n", a->player_moves);
-        clear_image(a->mlx,a->player);
+        clear_image(a->mlx,a->player, a->images);
         a->player.y -= 1;
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 16,a->player.y *16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 32,a->player.y *32);
        monster_ia(a);
        event_manager(a);
         
@@ -29,9 +29,9 @@ void    player_down(t_game *a)
     {
         a->player_moves++;
         ft_printf("player moves = %d\n", a->player_moves);
-        clear_image(a->mlx,a->player);
+        clear_image(a->mlx,a->player, a->images);
         a->player.y += 1;
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 16,a->player.y *16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 32,a->player.y *32);
         monster_ia(a);
         event_manager(a);
     }
@@ -49,9 +49,9 @@ void    player_left(t_game *a)
     {
         a->player_moves++;
         ft_printf("player moves = %d\n", a->player_moves);
-        clear_image(a->mlx,a->player);
+        clear_image(a->mlx,a->player, a->images);
         a->player.x -= 1;
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 16,a->player.y *16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 32,a->player.y *32);
         monster_ia(a);
         event_manager(a);
         
@@ -70,9 +70,9 @@ void    player_right(t_game *a)
     {
         a->player_moves++;
         ft_printf("player moves = %d\n", a->player_moves);
-        clear_image(a->mlx,a->player);
+        clear_image(a->mlx,a->player,a->images);
         a->player.x += 1;
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 16,a->player.y *16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.player,a->player.x * 32,a->player.y *32);
         monster_ia(a);
         event_manager(a);
     }
@@ -80,23 +80,28 @@ void    player_right(t_game *a)
         close_game(a->mlx, 1);
     free(line);
 }
-void    clear_image(t_mlx mlx, t_coord player)
+void    clear_image(t_mlx mlx, t_coord player, t_image img)
 {
-    int i;
-    int y;
     t_coord tab;
 
-    tab.y = (player.y) * 16;
-    y = 0;
-    while(y++ < 16)
-    {
+    tab.y = player.y * 32;
+    tab.x = player.x * 32;
+    //while(y++ < 32)
+    /*{
         i = 0;
-        tab.x = player.x * 16;
-        while (i++ < 16)
+        tab.x = player.x * 32;
+        while (i++ < 32)
         {
             mlx_pixel_put(mlx.ptr,mlx.window,tab.x,tab.y, 000000);
             tab.x++;
         }
         tab.y++;
-    }
+    }*/
+    mlx_put_image_to_window(mlx.ptr,mlx.window,img.ground,tab.x, tab.y);
+}
+int	render_next_key_event(t_game *view)
+{
+	mlx_hook(view->mlx.window, 17, 0L << 0, close_game, view);
+	mlx_hook(view->mlx.window, 2, 1L << 0, key_sort, view);
+	return (0);
 }

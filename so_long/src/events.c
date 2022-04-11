@@ -98,34 +98,35 @@ int     check_monster_move(t_game *a, char *line, int i)
     else
         return (1);
 }
+
 int    monster_move(t_game *a, int i)
 {
     if (i == 'L')
     {
-        clear_image(a->mlx,a->monster[a->index_monster]);
+        clear_image(a->mlx,a->monster[a->index_monster],a->images);
         a->monster[a->index_monster].x -= 1;
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->monster[a->index_monster].x * 16,a->monster[a->index_monster].y *16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->monster[a->index_monster].x * 32,a->monster[a->index_monster].y * 32);
         return(1);
     }
     if (i == 'R')
     {
-        clear_image(a->mlx,a->monster[a->index_monster]);
+        clear_image(a->mlx,a->monster[a->index_monster],a->images);
         a->monster[a->index_monster].x += 1;
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->monster[a->index_monster].x * 16,a->monster[a->index_monster].y *16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->monster[a->index_monster].x * 32,a->monster[a->index_monster].y *32);
         return(1);
     }
     if (i == 'U')
     {
-        clear_image(a->mlx,a->monster[a->index_monster]);
+        clear_image(a->mlx,a->monster[a->index_monster],a->images);
         a->monster[a->index_monster].y -= 1;
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->monster[a->index_monster].x * 16,a->monster[a->index_monster].y *16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->monster[a->index_monster].x * 32,a->monster[a->index_monster].y *32);
         return(1);
     }
     if (i == 'D')
     {
-        clear_image(a->mlx,a->monster[a->index_monster]);
+        clear_image(a->mlx,a->monster[a->index_monster],a->images);
         a->monster[a->index_monster].y += 1;
-        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->monster[a->index_monster].x * 16,a->monster[a->index_monster].y *16);
+        mlx_put_image_to_window(a->mlx.ptr,a->mlx.window,a->images.monster,a->monster[a->index_monster].x * 32,a->monster[a->index_monster].y *32);
         return(1);
     }
     return (0);
