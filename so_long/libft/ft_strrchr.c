@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eschmid <marvin@42lausanne.ch>             +#+  +:+       +#+        */
+/*   By: rserafim <rserafim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/14 13:49:01 by eschmid           #+#    #+#             */
-/*   Updated: 2021/10/29 14:42:32 by eschmid          ###   ########.fr       */
+/*   Updated: 2022/05/17 10:52:01 by rserafim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	int		i;
-//	char	*zebi;
+	int	i;
 
-//	zebi = (char *)s;
 	i = ft_strlen(s);
 	while (i > 0 && s[i] != (char)c)
 		i--;
