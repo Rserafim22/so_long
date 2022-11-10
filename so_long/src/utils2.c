@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rserafim <rserafim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rserafim <rserafim@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 11:17:43 by rserafim          #+#    #+#             */
-/*   Updated: 2022/04/13 12:27:49 by rserafim         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:16:28 by rserafim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,6 @@ void	count_to_window(t_mlx *a, void *img, int *moves)
 		i++;
 	}
 	mlx_string_put(a->ptr, a->window, 4, 16, 0x000000, coll_str);
+	free (str);
+	free(coll_str);
 }

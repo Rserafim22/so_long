@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_event.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rserafim <rserafim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rserafim <rserafim@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:22:18 by rserafim          #+#    #+#             */
-/*   Updated: 2022/04/13 11:57:00 by rserafim         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:41:53 by rserafim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ void	player_up(t_game *a)
 	}
 	else if ((a->player.x == a->sortie.x && a->player.y == a->sortie.y + 1)
 		&& a->count_coll == 0)
-		close_game(a->mlx, 1);
+		{
+			free(line_up);
+			close_game(*a, 1);
+		}
 	free(line_up);
 }
 
@@ -52,7 +55,10 @@ void	player_down(t_game *a)
 	}
 	else if ((a->player.x == a->sortie.x && a->player.y == a->sortie.y - 1)
 		&& a->count_coll == 0)
-		close_game(a->mlx, 1);
+		{
+			free(line_up);
+			close_game(*a, 1);
+		}
 	free(line_up);
 }
 
@@ -74,7 +80,10 @@ void	player_left(t_game *a)
 	}
 	else if ((a->player.x == a->sortie.x + 1 && a->player.y == a->sortie.y)
 		&& a->count_coll == 0 )
-		close_game(a->mlx, 1);
+		{
+			free(line);
+			close_game(*a, 1);
+		}
 	free (line);
 }
 
@@ -96,7 +105,10 @@ void	player_right(t_game *a)
 	}
 	else if ((a->player.x == a->sortie.x - 1 && a->player.y == a->sortie.y)
 		&& a->count_coll == 0)
-		close_game(a->mlx, 1);
+		{
+			free(line);
+			close_game(*a, 1);
+		}
 	free (line);
 }
 

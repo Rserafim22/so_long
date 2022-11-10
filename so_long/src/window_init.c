@@ -3,39 +3,69 @@
 /*                                                        :::      ::::::::   */
 /*   window_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rserafim <rserafim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rserafim <rserafim@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 16:27:21 by eschmid           #+#    #+#             */
-/*   Updated: 2022/05/17 10:35:31 by rserafim         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:36:33 by rserafim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	close_button(t_mlx *mlx)
+void ft_free_struct(char **tab,t_coord *coll, t_coord *monster, int y_size)
 {
-	mlx_clear_window(mlx->ptr, mlx->window);
-	mlx_destroy_window(mlx->ptr, mlx->window);
+	free (monster);
+	free (coll);
+	int i;
+
+	i = -1;
+	while (++i < y_size)
+	{
+		free (tab[i]);
+	}
+	free (tab);
+}
+int	close_button(t_game a)
+{
+	mlx_clear_window(a.mlx.ptr, a.mlx.window);
+	mlx_destroy_window(a.mlx.ptr, a.mlx.window);
+	ft_free_struct(a.map, a.coll, a.monster,a.mapi.y);
 	exit(ft_printf("Jeu fermé\n"));
 }
 
-int	close_game(t_mlx mlx, int i)
+int	close_game(t_game a, int i)
 {
-	mlx_clear_window(mlx.ptr, mlx.window);
-	mlx_destroy_window(mlx.ptr, mlx.window);
+	mlx_clear_window(a.mlx.ptr, a.mlx.window);
+	mlx_destroy_window(a.mlx.ptr, a.mlx.window);
+	ft_free_struct(a.map, a.coll, a.monster,a.mapi.y);
+	
 	if (i == 53)
 		exit(ft_printf("Jeu fermé\n"));
 	if (i == 1)
 		exit(ft_printf("Bien vu bg\n"));
 	if (i == 2)
 		exit(ft_printf("C'est dangereux !\n"));
-	return (0);
+	exit (0);
 }
 
 int	key_sort(int key, t_game *a)
 {
+	//int i;
+	//char **x;
+
+	//x = a->map;
+	//free (x);
+
+	//i = a->mapi.y;
 	if (key == 53)
-		close_game(a->mlx, 53);
+	{
+		/*while (i++ != 0)
+		{
+				free(a->map);
+		}
+		free (a->map);*/
+		close_game(*a, 53);
+	}
 	if (key == 13)
 		player_up(a);
 	if (key == 1)
@@ -60,7 +90,7 @@ void	window_init(t_game a)
 	fill_map(&a, a.map);
 	count_to_window(&a.mlx, a.images.wall, &a.player_moves);
 	mlx_key_hook(a.mlx.window, key_sort, &a);
-	mlx_hook(a.mlx.window, 17, 0L << 00, close_button, &a.mlx);
+	mlx_hook(a.mlx.window, 17, 0L << 00, close_button, &a);
 	mlx_loop(a.mlx.ptr);
 }
 

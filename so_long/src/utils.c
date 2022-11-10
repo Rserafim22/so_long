@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rserafim <rserafim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rserafim <rserafim@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/13 08:15:04 by rserafim          #+#    #+#             */
-/*   Updated: 2022/04/13 10:02:25 by rserafim         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:47:21 by rserafim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	check_map(const char *map)
 	const char	*check;
 
 	check = ft_strrchr(map, '.');
+	if (check == NULL)
+		return(0);
 	check++;
 	if (ft_strncmp(check, "ber", 3) == 0)
 		return (1);
@@ -81,11 +83,11 @@ void	fill_map(t_game *p, char **map)
 
 void	fill_line(char *line, t_game *a)
 {
-	int	*x;
-	int	*y;
+	//int	*x;
+	//int	*y;
 
-	x = &a->mapi.x;
-	y = &a->mapi.y;
+	//x = &a->mapi.x;
+	//y = &a->mapi.y;
 	while (line[a->mapi.x] != '\0')
 	{
 		if (line[a->mapi.x] == 'P')

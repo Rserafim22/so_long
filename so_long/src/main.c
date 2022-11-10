@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rserafim <rserafim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rserafim <rserafim@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 15:45:06 by eschmid           #+#    #+#             */
-/*   Updated: 2022/04/13 11:49:27 by rserafim         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:35:21 by rserafim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	so_long(const char *arg)
 	{
 		if (map_size_error(arg, &x.mapi) == 0)
 			return (ft_printf("%s\n", "mauvaise map :("));
-		x.map = maplloc(arg);
+		x.map = maplloc(arg, x.mapi.y);
 		entity_counter(&x);
 		init_entity(&x);
 		window_init(x);
@@ -77,6 +77,7 @@ int	main(int ac, char **av)
 	if (ac == 2)
 	{
 		(so_long(av[1]));
+		return (0);
 	}
 	else
 		return (ft_printf("Error\nNeed a valid map\n"));

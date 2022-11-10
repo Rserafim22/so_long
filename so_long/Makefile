@@ -21,13 +21,18 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME):	$(OBJ)
-	$(CC) $(CFLAGS) $(GRAPHICS) -o $(NAME) $(OBJ) $(LIB)
+	@$(MAKE) -C ./libft
+	@$(MAKE) -C ./mlx
+	@$(CC) $(CFLAGS) $(GRAPHICS) -o $(NAME) $(OBJ) $(LIB)
 
 clean:
-	$(RM) $(OBJ)
+	@$(MAKE) -C ./libft clean
+	@$(MAKE) -C ./mlx clean
+	@$(RM) $(OBJ)
 
 fclean: clean
-	$(RM) $(NAME)
+	@$(MAKE) -C ./libft fclean
+	@$(RM) $(NAME)
 
 re: fclean all
 

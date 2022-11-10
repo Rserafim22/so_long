@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rserafim <rserafim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rserafim <rserafim@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 15:46:02 by rserafim          #+#    #+#             */
-/*   Updated: 2022/04/13 09:40:52 by rserafim         ###   ########.fr       */
+/*   Updated: 2022/11/07 17:38:59 by rserafim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,28 +29,52 @@ int	check_need(char c, char *need)
 	}
 	return (0);
 }
-
+int	errors_map(int x, int y, const char *need)
+{
+	if (x == 0 || y == 0)
+		return (0);
+	if (x == y)
+		return (0);
+	if (ft_strncmp(need, "777", 3) != 0)
+		return (0);
+	return (1);
+}
 int	map_size_error(const char *map_name, t_coord *p)
 {
 	int			fd;
 	char		*line;
 	static char	*need;
 
-	need = ft_strdup("CPE");
 	fd = (open(map_name, O_RDONLY));
 	if (fd == -1 || fd == 0)
 		return (0);
 	line = get_next_line(fd);
+	need = ft_strdup("CPE");
 	if (ft_char_find(line, '0'))
+	{
+		free (need);
+		free (line);
 		return (0);
+	}
 	(*p).x = ft_strlen(line);
 	(*p).y = check_mid_map (line, need, fd);
-	if ((*p).y == 0 || (*p).x == 0)
+	if (errors_map((*p).x, (*p).y, need) == 0)
+	{
+		close (fd);
+		free (need);
+		return (0);
+	}
+	/*if ((*p).y == 0 || (*p).x == 0)
 		return (0);
 	if ((*p).y == (*p).x)
 		return (0);
 	if (ft_strncmp(need, "777", 3) != 0)
+	{
+		free (need);
 		return (0);
+	}*/
+	close (fd);
+	free (need);
 	return (1);
 }
 
@@ -87,25 +111,33 @@ int	ft_check_line(const char *line, char *need)
 	return (0);
 }
 
-int	check_mid_map(const char *line, char *need, int fd)
+int	check_mid_map(char *line, char *need, int fd)
 {
 	int		i;
 	char	*last_line;
 	size_t	comp;
 
 	i = 0;
-	comp = strlen(line);
+	comp = ft_strlen(line);
+	last_line = NULL;
 	while (line != NULL || line != (void *)0)
 	{
 		i++;
-		last_line = ft_strdup(line);
+		if (last_line)
+			free(last_line);
 		if (comp != ft_strlen(line))
 			return (0);
 		if (ft_check_line(line, need) == 1)
 			return (0);
+		last_line = ft_strdup(line);
+		free (line);
 		line = get_next_line(fd);
 	}
 	if (ft_char_find(last_line, '0'))
+	{
+		free (last_line);
 		return (0);
+	}
+	free (last_line);
 	return (i);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rserafim <rserafim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rserafim <rserafim@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 15:32:20 by eschmid           #+#    #+#             */
-/*   Updated: 2022/04/13 12:16:45 by rserafim         ###   ########.fr       */
+/*   Updated: 2022/11/07 18:41:23 by rserafim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	event_manager(t_game *a)
 	a->index_coll = -1;
 	while (++a->index_coll <= a->count_coll)
 	{
-		if (a->player.x == a->coll[a->index_coll].x
-			&& a->player.y == a->coll[a->index_coll].y)
+		if (a->player.x == a->coll[a->index_coll].x && a->player.y == a->coll[a->index_coll].y)
 		{
 			a->coll[a->index_coll].x = 0;
 			a->coll[a->index_coll].y = 0;
@@ -58,7 +57,7 @@ void	event_manager(t_game *a)
 	{
 		if (a->player.x == a->monster[a->index_monster].x
 			&& a->player.y == a->monster[a->index_monster].y)
-			close_game(a->mlx, 2);
+			close_game(*a, 2);
 	}
 }
 
