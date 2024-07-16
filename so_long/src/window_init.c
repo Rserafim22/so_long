@@ -42,7 +42,7 @@ int	close_game(t_game a, int i)
 	if (i == 53)
 		exit(ft_printf("Jeu fermé\n"));
 	if (i == 1)
-		exit(ft_printf("Bien vu bg\n"));
+		exit(ft_printf("Bravo !\n"));
 	if (i == 2)
 		exit(ft_printf("C'est dangereux !\n"));
 	exit (0);
